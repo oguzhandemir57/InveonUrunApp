@@ -1,0 +1,150 @@
+﻿
+@{
+    Layout = null;
+}
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/Home/HomeCss.css" rel="stylesheet" />
+<link href="~/Content/TableCss.css" rel="stylesheet" />
+<link href="~/Content/Product/ProductCss.css" rel="stylesheet" />
+<link href="~/Content/Angular/AngularXeditable/css/xeditable.css" rel="stylesheet" />
+
+
+<script src="~/Scripts/angular.js"></script>
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/Content/Angular/moment_JS.js"></script>
+<script src="~/Scripts/angular-animate.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/AngularLibrary_164.js"></script>
+<script src="~/Scripts/angularMask.js"></script>
+<script src="~/Scripts/moment_JS.js"></script>
+
+<script src="~/Scripts/Home/HomeJS.js?v=1.0.0.1"></script>
+<!DOCTYPE html>
+
+<html ng-app="app" ng-controller="HomeCtrl">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+    <div class="admin-panel clearfix" ng-init="Load()">
+        <div class="slidebar">
+            <div class="logo">
+                <a href=""></a>
+            </div>
+            <ul>
+                <li><a href="" ng-click="MenuClick(0)" id="targeted"> Ürünler </a></li>
+                <li ng-show="isAdmin"><a ng-click="MenuClick(1)" href=""> Yönetim </a></li>
+            </ul>
+        </div>
+        <div class="main">
+            <ul class="topbar">
+                <li></li>
+                <li><a href="#" ng-click="ExitBtnClick()">Çıkış</a></li>
+            </ul>
+            <div class="mainContent clearfix">
+                <div id="dashboard" ng-show="productShow">
+                    <h2 class="header">Ürünler</h2>
+                    <div class="row">
+                        <div class="col-lg-6" style="float:left" ng-repeat="item in productList">
+                            <div class="wrapper">
+                                <div class="product-img">
+                                    <img src="http://bit.ly/2tMBBTd" style=" height:420px;width:327px">
+                                </div>
+                                <div class="product-info">
+                                    <div class="product-text">
+                                        <h1 ng-bind="item.ProductName"></h1>
+                                        <h2>by studio and friends</h2>
+                                        <p ng-bind="item.ProductDetail.Description"> </p>
+                                    </div>
+                                    <div class="product-price-btn">
+                                        <p><span ng-bind="item.ProductDetail.Price"></span>&#8378;</p>
+                                        <button type="button" ng-disabled="true">buy now</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="height:100%;" ng-show="managementShow">
+                    <h2 class="header">Yönetim</h2>
+                    <div style="margin-top:10%;">
+                        <div class="row" style="margin: 15px">
+                            <div class="col-lg-12" ng-show="productListShow">
+                                <table id="grupTanimTable" style="text-align:center">
+                                    <tr style="font-weight: bold">
+                                        <td>Ürün Adı</td>
+                                        <td>Oluşturma Tarihi</td>
+                                        <td>İşlem</td>
+
+                                    </tr>
+                                    <tr ng-repeat="item in productList">
+                                        <td>
+                                            <p disabled editable-textarea="item.ProductName" e-name="ProductName" e-form="rowform">
+                                                {{item.ProductName}}
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p disabled editable-text="item.CreateDate" e-wi e-name="Tarih" e-cols="100" e-form="rowform" e-required onbeforesave="IsNull($data)">
+                                                {{item.CreateDate}}
+                                            </p>
+                                        </td>
+                                        <td style="white-space: nowrap; text-align:center;">
+                                            <div class="buttons">
+                                                <button class="btn btn-success" data-toggle="modal" data-target="#updateModal" ng-click="GetProduct(item.Id)">Detay</button>
+                                                <button class="btn btn-danger" ng-click="deleteProduct(item.Id)">Sil</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div style="float:right; margin-top:10px">
+                                    <button class="btn btn-info" ng-click="insertProductClick()">Yeni Kayıt</button>
+                                </div>
+                            </div>
+                            <div class="col-lg-offset-3 col-lg-6" ng-show="updateShow">
+                                <h2 style="text-align:center">Ürün Güncelle</h2><br />
+                                <label class="control-label">Ürün Açıklama</label><br />
+                                <input type="text" class="form-control" maxlength="250"  ng-model="product.Description" /><br />
+                                <label class="control-label">Barcode</label><br />
+                                <input type="text" class="form-control" ng-model="product.Barcode" /><br />
+                                <label class="control-label">Ücret</label><br />
+                                <input type="text" class="form-control" ng-model="product.Price" /><br />
+                                <label class="control-label">Görsel</label><br />
+                                <input type="text" class="form-control" ng-model="product.Image" /><br />
+                                <label class="control-label">Adet</label><br />
+                                <input type="text" class="form-control" ng-model="product.Quantity" /><br />
+                                <div style="float:right">
+                                    <button class="btn btn-success" ng-click="productUpdate(product)">Güncelle</button>
+                                    <button class="btn btn-primary" ng-click="updateBackClick()">Geri</button>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-offset-3 col-lg-6" ng-show="insertShow">
+                                <h2 style="text-align:center">Ürün Kaydet</h2>
+                                <label class="control-label">Ürün Adı</label><br />
+                                <input type="text" class="form-control" ng-model="product.ProductName" /><br />
+                                <label class="control-label">Ürün Açıklama</label><br />
+                                <input type="text" class="form-control" maxlength="250" ng-model="product.Description" /><br />
+                                <label class="control-label">Barcode</label><br />
+                                <input type="text" class="form-control" ng-model="product.Barcode" /><br />
+                                <label class="control-label">Ücret</label><br />
+                                <input type="text" class="form-control" ng-model="product.Price" /><br />
+                                <label class="control-label">Görsel</label><br />
+                                <input type="text" class="form-control" ng-model="product.Image" /><br />
+                                <label class="control-label">Adet</label><br />
+                                <input type="text" class="form-control" ng-model="product.Quantity" /><br />
+                                <div style="float:right">
+                                    <button class="btn btn-success" ng-click="productInsert(product)">Kaydet</button>
+                                    <button class="btn btn-primary" ng-click="updateBackClick()">Geri</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

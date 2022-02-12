@@ -1,0 +1,36 @@
+﻿
+@{
+    Layout = null;
+}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<link href="~/Content/Login/LoginCss.css" rel="stylesheet" />
+
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/Home/LoginJs.js?v=1.0.0.1"></script>
+<!DOCTYPE html>
+
+<html ng-app="app">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+    <div class="login" ng-controller="LoginCtrl">
+        <div class="login-triangle"></div>
+
+        <h2 class="login-header">Log in</h2>
+
+        <form class="login-container">
+            <p><input type="text" ng-model="userName" placeholder="User Name"></p>
+            <p><input type="password" ng-model="password" placeholder="Password"></p>
+            <p style="font-weight:bold;color:red">{{ErrorMessage}}</p>
+            <p> <button class="btn btn-success btn-block" type="button" ng-click="LoginCheck()">Log in</button></p>
+        </form>
+
+
+    </div>
+</body>
+</html>
