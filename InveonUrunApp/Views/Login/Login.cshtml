@@ -21,13 +21,13 @@
     <div class="login" ng-controller="LoginCtrl">
         <div class="login-triangle"></div>
 
-        <h2 class="login-header">Log in</h2>
+        <h2 class="login-header">Giriş</h2>
 
         <form class="login-container">
-            <p><input type="text" ng-model="userName" placeholder="User Name"></p>
-            <p><input type="password" ng-model="password" placeholder="Password"></p>
+            <p><input type="text" ng-model="userName" placeholder="Kullanıcı Adı"></p>
+            <p><input type="password" ng-model="password" placeholder="Şifre"></p>
             <p style="font-weight:bold;color:red">{{ErrorMessage}}</p>
-            <p> <button class="btn btn-success btn-block" type="button" ng-click="LoginCheck()">Log in</button></p>
+            <p> <button class="btn btn-success btn-block" type="button" ng-click="LoginCheck()">Giriş</button></p>
         </form>
 
 
